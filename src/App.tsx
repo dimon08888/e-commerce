@@ -22,9 +22,11 @@ function App() {
 
 function Header() {
   return (
-    <header>
-      <input type="text" />
-      <button></button>
+    <header className="header">
+      <div className="search-wrapper">
+        <input className="search" type="text" />
+        <button className="btn-search">Search</button>
+      </div>
     </header>
   );
 }
@@ -32,8 +34,10 @@ function Header() {
 function ProductCard({ product }: { product: Product }) {
   return (
     <div>
-      {product.title}
-      <img width={100} height={100} src={product.image} alt="" />
+      <div className="product-box">
+        <p>{product.title}</p>
+        <img src={product.image} alt="" />
+      </div>
     </div>
   );
 }
@@ -48,7 +52,7 @@ function Products() {
   }, []);
 
   return (
-    <div>
+    <div className="container">
       {products.map(product => (
         <ProductCard key={product.id} product={product} />
       ))}
