@@ -40,12 +40,32 @@ img:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-
   height: 150px;
   margin-bottom: 20px;
   background: url('https://sitespectr.ru/wp-content/uploads/2018/11/heder_for_site_0101.png')
     center center no-repeat;
   background-size: cover;
+  border-bottom: 1px solid #000;
+}
+
+.cart {
+  position: absolute;
+  right: 40px;
+}
+.btn-cart {
+  padding: 10px 10px;
+  background-color: inherit;
+  border: 1px solid #000;
+  border-radius: 5px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  transition: 0.5s;
+}
+
+.btn-cart:hover {
+  background-color: #52b788;
+  border-radius: 5px;
+  text-decoration: none;
 }
 
 .search-wrapper {

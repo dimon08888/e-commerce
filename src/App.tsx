@@ -27,6 +27,9 @@ function Header() {
         <input className="search" type="text" />
         <button className="btn-search">Search</button>
       </div>
+      <div className="cart">
+        <button className="btn-cart">Cart 0</button>
+      </div>
     </header>
   );
 }
