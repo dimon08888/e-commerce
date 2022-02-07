@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { Routes, Route, Link } from 'react-router-dom';
 import './App.css';
+import ProductDetail from './ProductDetail';
 
 type Product = {
   id: number;
@@ -15,7 +17,10 @@ function App() {
   return (
     <>
       <Header />
-      <Products />
+      <Routes>
+        <Route path="/" element={<Products />} />
+        <Route path="/products/:productId" element={<ProductDetail />} />
+      </Routes>
     </>
   );
 }
@@ -23,6 +28,9 @@ function App() {
 function Header() {
   return (
     <header className="header">
+      <div>
+        <Link to="/">Logo</Link>
+      </div>
       <div className="search-wrapper">
         <input className="p-2 text-xl rounded-lg w-96" type="text" />
       </div>
@@ -38,7 +46,9 @@ function Header() {
 function ProductCard({ product }: { product: Product }) {
   return (
     <div className="border-solid border-2 border-blue-600 rounded-t-lg flex flex-col">
-      <h3 className="bg-blue-600 font-bold text-white py-2 px-4">{product.title}</h3>
+      <Link to={'/products/' + product.id}>
+        <h3 className="bg-blue-600 font-bold text-white py-2 px-4">{product.title}</h3>
+      </Link>
       <div className="p-3 bg-white flex-grow flex flex-col">
         <div className="flex justify-center">
           <img src={product.image} alt="" className="h-32" />
