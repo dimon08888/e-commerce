@@ -14,18 +14,34 @@ type Product = {
 };
 
 function App() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [cart, setCart] = useState<Product[]>([]);
+
+  function onAddToCart(product: Product) {
+    setCart(cart => [...cart, product]);
+  }
+
+  useEffect(() => {
+    fetch('http://fakestoreapi.com/products')
+      .then(response => response.json())
+      .then(setProducts);
+  }, []);
+
   return (
     <>
-      <Header />
+      <Header cart={cart} />
       <Routes>
-        <Route path="/" element={<Products />} />
+        <Route
+          path="/"
+          element={<Products products={products} onAddToCart={onAddToCart} />}
+        />
         <Route path="/products/:productId" element={<ProductDetail />} />
       </Routes>
     </>
   );
 }
 
-function Header() {
+function Header({ cart }: { cart: Product[] }) {
   return (
     <header className="header">
       <div>
@@ -36,14 +52,20 @@ function Header() {
       </div>
       <div className="busket">
         <button className="btn-busket">
-          <i className="fa fa-shopping-cart" aria-hidden="true"></i> 0
+          <i className="fa fa-shopping-cart" aria-hidden="true"></i> {cart.length}
         </button>
       </div>
     </header>
   );
 }
 
-function ProductCard({ product }: { product: Product }) {
+function ProductCard({
+  product,
+  onAddToCart,
+}: {
+  product: Product;
+  onAddToCart: (product: Product) => void;
+}) {
   return (
     <div className="border-solid border-2 border-blue-600 rounded-t-lg flex flex-col">
       <Link to={'/products/' + product.id}>
@@ -64,7 +86,10 @@ function ProductCard({ product }: { product: Product }) {
                 currency: 'USD',
               })}
             </span>
-            <button className="ml-4 px-6 py-1 font-bold text-lg bg-blue-800 text-white rounded-full hover:bg-blue-900">
+            <button
+              onClick={() => onAddToCart(product)}
+              className="ml-4 px-6 py-1 font-bold text-lg bg-blue-800 text-white rounded-full hover:bg-blue-900 cursor-pointer"
+            >
               Add to Cart
             </button>
           </div>
@@ -74,19 +99,17 @@ function ProductCard({ product }: { product: Product }) {
   );
 }
 
-function Products() {
-  const [products, setProducts] = useState<Product[]>([]);
-
-  useEffect(() => {
-    fetch('http://fakestoreapi.com/products')
-      .then(response => response.json())
-      .then(setProducts);
-  }, []);
-
+function Products({
+  products,
+  onAddToCart,
+}: {
+  products: Array<Product>;
+  onAddToCart: (product: Product) => void;
+}) {
   return (
     <div className="grid grid-cols-3 gap-4">
       {products.map(product => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} />
       ))}
     </div>
   );
