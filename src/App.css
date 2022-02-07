@@ -9,9 +9,10 @@ body {
 }
 
 .header {
-  background-color: #adb5bd;
+  padding: 20px;
+  width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 100px;
   margin-bottom: 20px;
@@ -21,11 +22,7 @@ body {
   border-bottom: 1px solid #000;
 }
 
-.busket {
-  position: absolute;
-  right: 40px;
-}
-.btn-busket {
+.btn-basket {
   padding: 10px 10px;
   background-color: inherit;
   border: 1px solid #000;
@@ -35,7 +32,7 @@ body {
   transition: 0.5s;
 }
 
-.btn-busket:hover {
+.btn-basket:hover {
   background-color: #52b788;
   border-radius: 5px;
   text-decoration: none;

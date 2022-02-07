@@ -16,9 +16,14 @@ type Product = {
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [cart, setCart] = useState<Product[]>([]);
+  const [search, setSearch] = useState('Hello');
 
   function onAddToCart(product: Product) {
     setCart(cart => [...cart, product]);
+  }
+
+  function onSetSearch(value: string) {
+    setSearch(value);
   }
 
   useEffect(() => {
@@ -29,7 +34,7 @@ function App() {
 
   return (
     <>
-      <Header cart={cart} />
+      <Header cart={cart} search={search} onSetSearch={onSetSearch} />
       <Routes>
         <Route
           path="/"
@@ -41,17 +46,32 @@ function App() {
   );
 }
 
-function Header({ cart }: { cart: Product[] }) {
+function Header({
+  cart,
+  search,
+  onSetSearch,
+}: {
+  cart: Product[];
+  search: string;
+  onSetSearch: (value: string) => void;
+}) {
   return (
     <header className="header">
       <div>
-        <Link to="/">Logo</Link>
+        <Link className="no-underline font-bold text-black text-xl " to="/">
+          E-commerce
+        </Link>
       </div>
       <div className="search-wrapper">
-        <input className="p-2 text-xl rounded-lg w-96" type="text" />
+        <input
+          className="p-2 text-xl rounded-lg w-96"
+          type="text"
+          onChange={e => onSetSearch(e.target.value)}
+          value={search}
+        />
       </div>
-      <div className="busket">
-        <button className="btn-busket">
+      <div className="basket">
+        <button className="btn-basket">
           <i className="fa fa-shopping-cart" aria-hidden="true"></i> {cart.length}
         </button>
       </div>
@@ -67,9 +87,9 @@ function ProductCard({
   onAddToCart: (product: Product) => void;
 }) {
   return (
-    <div className="border-solid border-2 border-blue-600 rounded-t-lg flex flex-col">
-      <Link to={'/products/' + product.id}>
-        <h3 className="bg-blue-600 font-bold text-white py-2 px-4">{product.title}</h3>
+    <div className="border-solid border-2 border-neutral-500 rounded-t-lg flex flex-col">
+      <Link className="no-underline" to={'/products/' + product.id}>
+        <h3 className="bg-neutral-400 font-bold text-white py-2 px-4">{product.title}</h3>
       </Link>
       <div className="p-3 bg-white flex-grow flex flex-col">
         <div className="flex justify-center">
@@ -78,7 +98,7 @@ function ProductCard({
         <div className="overflow-ellipsis text-lg">{product.description}</div>
 
         <div className="w-full flex justify-around mt-auto items-center">
-          <div>{product.category}</div>
+          <div className="font-bold">{product.category}</div>
           <div>
             <span className="text-lg font-bold">
               {product.price.toLocaleString('en-US', {
@@ -88,7 +108,7 @@ function ProductCard({
             </span>
             <button
               onClick={() => onAddToCart(product)}
-              className="ml-4 px-6 py-1 font-bold text-lg bg-blue-800 text-white rounded-full hover:bg-blue-900 cursor-pointer"
+              className="ml-4 px-6 py-1 font-bold text-lg bg-neutral-500 text-white rounded-full hover:bg-neutral-700 cursor-pointer"
             >
               Add to Cart
             </button>
