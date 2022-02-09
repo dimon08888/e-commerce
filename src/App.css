@@ -31,9 +31,26 @@ body {
   font-size: 1.2rem;
   transition: 0.5s;
 }
+li {
+  list-style: none;
+}
+
+.product-list {
+  background-color: #e9ecef;
+  border: 2px solid #52b788;
+  border-radius: 5px;
+  min-width: 200px;
+  display: none;
+  text-align: right;
+}
 
 .btn-basket:hover {
   background-color: #52b788;
   border-radius: 5px;
   text-decoration: none;
+}
+
+.btn-basket:hover ~ .product-list {
+  display: block;
+  right: 20px;
 }

@@ -58,7 +58,7 @@ function Header({
   return (
     <header className="header">
       <div>
-        <Link className="no-underline font-bold text-black text-xl " to="/">
+        <Link className="no-underline font-bold text-black text-xl italic" to="/">
           E-commerce
         </Link>
       </div>
@@ -71,9 +71,10 @@ function Header({
         />
       </div>
       <div className="basket">
-        <button className="btn-basket">
+        <button className="btn-basket relative">
           <i className="fa fa-shopping-cart" aria-hidden="true"></i> {cart.length}
         </button>
+        <ProductList />
       </div>
     </header>
   );
@@ -89,7 +90,9 @@ function ProductCard({
   return (
     <div className="border-solid border-2 border-neutral-500 rounded-t-lg flex flex-col">
       <Link className="no-underline" to={'/products/' + product.id}>
-        <h3 className="bg-neutral-400 font-bold text-white py-2 px-4">{product.title}</h3>
+        <h3 className="bg-neutral-400 font-bold text-white py-2 px-4 rounded-t-lg">
+          {product.title}
+        </h3>
       </Link>
       <div className="p-3 bg-white flex-grow flex flex-col">
         <div className="flex justify-center">
@@ -131,6 +134,20 @@ function Products({
       {products.map(product => (
         <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} />
       ))}
+    </div>
+  );
+}
+
+function ProductList() {
+  return (
+    <div className="product-list absolute">
+      <h4>Basket List</h4>
+      <ul>
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+        <li>Item 4</li>
+      </ul>
     </div>
   );
 }
