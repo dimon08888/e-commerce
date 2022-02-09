@@ -26,31 +26,40 @@ body {
   padding: 10px 10px;
   background-color: inherit;
   border: 1px solid #000;
-  border-radius: 5px;
   font-weight: 700;
   font-size: 1.2rem;
   transition: 0.5s;
+  border-radius: 5px;
 }
+
 li {
   list-style: none;
+  transition: 0.5s;
+}
+
+li:hover {
+  outline: 2px solid #52b788;
 }
 
 .product-list {
   background-color: #e9ecef;
   border: 2px solid #52b788;
-  border-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: none;
   min-width: 200px;
   display: none;
-  text-align: right;
 }
 
 .btn-basket:hover {
   background-color: #52b788;
-  border-radius: 5px;
   text-decoration: none;
+  border-bottom: none;
 }
 
-.btn-basket:hover ~ .product-list {
+.btn-basket:hover > .product-list {
   display: block;
-  right: 20px;
+  top: 41px;
+  right: -1px;
 }

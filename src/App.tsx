@@ -16,7 +16,7 @@ type Product = {
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [cart, setCart] = useState<Product[]>([]);
-  const [search, setSearch] = useState('Hello');
+  const [search, setSearch] = useState('Hello!');
 
   function onAddToCart(product: Product) {
     setCart(cart => [...cart, product]);
@@ -73,8 +73,8 @@ function Header({
       <div className="basket">
         <button className="btn-basket relative">
           <i className="fa fa-shopping-cart" aria-hidden="true"></i> {cart.length}
+          <ProductList />
         </button>
-        <ProductList />
       </div>
     </header>
   );
@@ -96,7 +96,7 @@ function ProductCard({
       </Link>
       <div className="p-3 bg-white flex-grow flex flex-col">
         <div className="flex justify-center">
-          <img src={product.image} alt="" className="h-32" />
+          <img src={product.image} alt="" className="h-32 " />
         </div>
         <div className="overflow-ellipsis text-lg">{product.description}</div>
 
@@ -111,7 +111,7 @@ function ProductCard({
             </span>
             <button
               onClick={() => onAddToCart(product)}
-              className="ml-4 px-6 py-1 font-bold text-lg bg-neutral-500 text-white rounded-full hover:bg-neutral-700 cursor-pointer"
+              className="ml-4 px-6 py-1 font-bold text-lg bg-neutral-500 text-white rounded-full hover:bg-neutral-700 cursor-pointer transition-colors duration-500"
             >
               Add to Cart
             </button>
@@ -141,12 +141,16 @@ function Products({
 function ProductList() {
   return (
     <div className="product-list absolute">
-      <h4>Basket List</h4>
-      <ul>
+      <h4 className="text-center">Basket List</h4>
+      <ul className="transition-colors duration-500">
         <li>Item 1</li>
         <li>Item 2</li>
         <li>Item 3</li>
         <li>Item 4</li>
+        <li>Item 5</li>
+        <li>Item 6</li>
+        <li>Item 7</li>
+        <li>Item 8</li>
       </ul>
     </div>
   );
