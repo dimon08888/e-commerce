@@ -59,7 +59,7 @@ function App() {
         />
         <Route
           path="/products/:productId"
-          element={<ProductDetail products={products} />}
+          element={<ProductDetail products={products} onAddToCart={onAddToCart} />}
         />
         <Route
           path="/cart"
@@ -128,7 +128,7 @@ function ProductCard({
       </Link>
       <div className="p-3 bg-white flex-grow flex flex-col">
         <div className="flex justify-center">
-          <img src={product.image} alt="" className="h-32 " />
+          <img src={product.image} alt="" className="h-32" />
         </div>
         <div className="overflow-ellipsis text-lg">{product.description}</div>
 
