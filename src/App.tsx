@@ -3,27 +3,31 @@ import { useState, useEffect } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import ProductDetail from './ProductDetail';
-
-type Product = {
-  id: number;
-  image: string;
-  price: number;
-  title: string;
-  category: string;
-  description: string;
-};
+import Cart from './Cart';
+import { Product } from './types';
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [cart, setCart] = useState<Product[]>([]);
-  const [search, setSearch] = useState('Hello!');
+  const [search, setSearch] = useState('');
 
   function onAddToCart(product: Product) {
     setCart(cart => [...cart, product]);
   }
 
+  function onRemoveFromCart(product: Product) {
+    setCart(cart => {
+      const productFirstIndex = cart.findIndex(prod => prod === product);
+      return cart.filter((_, index) => index !== productFirstIndex);
+    });
+  }
+
   function onSetSearch(value: string) {
     setSearch(value);
+  }
+
+  function onClearCart(): void {
+    setCart([]);
   }
 
   useEffect(() => {
@@ -41,6 +45,17 @@ function App() {
           element={<Products products={products} onAddToCart={onAddToCart} />}
         />
         <Route path="/products/:productId" element={<ProductDetail />} />
+        <Route
+          path="/cart"
+          element={
+            <Cart
+              onClearCart={onClearCart}
+              cart={cart}
+              onAddToCart={onAddToCart}
+              onRemoveFromCart={onRemoveFromCart}
+            />
+          }
+        />
       </Routes>
     </>
   );
@@ -70,11 +85,12 @@ function Header({
           value={search}
         />
       </div>
-      <div className="basket">
-        <button className="btn-basket relative">
-          <i className="fa fa-shopping-cart" aria-hidden="true"></i> {cart.length}
-          <ProductList />
-        </button>
+      <div>
+        <Link to="/cart">
+          <div className="font-bold">
+            <i className="fa fa-shopping-cart" aria-hidden="true"></i> {cart.length}
+          </div>
+        </Link>
       </div>
     </header>
   );
@@ -126,7 +142,7 @@ function Products({
   products,
   onAddToCart,
 }: {
-  products: Array<Product>;
+  products: Product[];
   onAddToCart: (product: Product) => void;
 }) {
   return (
@@ -134,24 +150,6 @@ function Products({
       {products.map(product => (
         <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} />
       ))}
-    </div>
-  );
-}
-
-function ProductList() {
-  return (
-    <div className="product-list absolute">
-      <h4 className="text-center">Basket List</h4>
-      <ul className="transition-colors duration-500">
-        <li>Item 1</li>
-        <li>Item 2</li>
-        <li>Item 3</li>
-        <li>Item 4</li>
-        <li>Item 5</li>
-        <li>Item 6</li>
-        <li>Item 7</li>
-        <li>Item 8</li>
-      </ul>
     </div>
   );
 }
