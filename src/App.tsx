@@ -57,7 +57,10 @@ function App() {
           path="/"
           element={<Products products={filteredProducts} onAddToCart={onAddToCart} />}
         />
-        <Route path="/products/:productId" element={<ProductDetail />} />
+        <Route
+          path="/products/:productId"
+          element={<ProductDetail products={products} />}
+        />
         <Route
           path="/cart"
           element={
@@ -99,7 +102,7 @@ function Header({
         />
       </div>
       <div>
-        <Link to="/cart">
+        <Link className="text-2xl no-underline text-black" to="/cart">
           <div className="font-bold">
             <i className="fa fa-shopping-cart" aria-hidden="true"></i> {cart.length}
           </div>

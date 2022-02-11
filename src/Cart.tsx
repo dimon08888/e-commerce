@@ -24,22 +24,23 @@ export default function Cart({
   }, [cart]);
 
   return (
-    <div className="product-list absolute">
-      <h4 className="text-center">Shoping Cart</h4>
-      <ul className="flex flex-col gap-2">
+    <div className="">
+      <h4 className="text-center text-xl">Shoping Cart</h4>
+      <ul className="flex flex-col gap-2 items-center">
         {cartEntries.map(([product, count]) => (
-          <li
-            className="list-none hover:outline outline-green-500 hover:outline-2 text-left text-sm"
-            key={product.id}
-          >
-            {product.title} {count}
+          <li className="list-none text-xlt max-w-lg flex items-center" key={product.id}>
+            <img className="w-10 h-10 mr-2" src={product.image} alt="" />
+            <span className="hover:unreline">{product.title}</span>
+            <span className="text-lg font-bold ml-2">{count}</span>
             <button
+              className="px-2 py-1 rounded-md bg-green-600 ml-1 cursor-pointer hover:bg-green-500"
               onClick={() => onAddToCart(product)}
               aria-label={`Increase ${product.title} count`}
             >
               +
             </button>
             <button
+              className="px-2 py-1 rounded-md bg-red-700 ml-1 cursor-pointer hover:bg-red-500"
               onClick={() => onRemoveFromCart(product)}
               aria-label={`Decrease ${product.title} count`}
             >
@@ -47,7 +48,12 @@ export default function Cart({
             </button>
           </li>
         ))}
-        <button onClick={onClearCart}>Clear Cart</button>
+        <button
+          className="px-3 py-2 cursor-pointer rounded bg-neutral-400 hover:bg-neutral-300"
+          onClick={onClearCart}
+        >
+          Clear Cart
+        </button>
       </ul>
     </div>
   );
