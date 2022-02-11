@@ -1,15 +1,25 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { useState, useEffect, useMemo } from 'react';
+import { Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
 import ProductDetail from './ProductDetail';
 import Cart from './Cart';
-import { Product } from './types';
+import type { Product } from './types';
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [cart, setCart] = useState<Product[]>([]);
   const [search, setSearch] = useState('');
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const filteredProducts = useMemo(() => {
+    return products.filter(
+      product =>
+        product.title.toLowerCase().includes(search.toLowerCase()) ||
+        product.description.toLowerCase().includes(search.toLowerCase()),
+    );
+  }, [products, search]);
 
   function onAddToCart(product: Product) {
     setCart(cart => [...cart, product]);
@@ -24,6 +34,9 @@ function App() {
 
   function onSetSearch(value: string) {
     setSearch(value);
+    if (location.pathname !== '/') {
+      navigate('/');
+    }
   }
 
   function onClearCart(): void {
@@ -42,7 +55,7 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<Products products={products} onAddToCart={onAddToCart} />}
+          element={<Products products={filteredProducts} onAddToCart={onAddToCart} />}
         />
         <Route path="/products/:productId" element={<ProductDetail />} />
         <Route
