@@ -87,7 +87,7 @@ function Header({
   onSetSearch: (value: string) => void;
 }) {
   return (
-    <header className="header">
+    <header className="header sticky top-0">
       <div>
         <Link className="no-underline font-bold text-black text-xl italic" to="/">
           E-commerce
@@ -98,6 +98,7 @@ function Header({
           className="p-2 text-xl rounded-lg w-96"
           type="text"
           onChange={e => onSetSearch(e.target.value)}
+          placeholder="Search"
           value={search}
         />
       </div>
