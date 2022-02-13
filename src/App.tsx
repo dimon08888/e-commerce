@@ -56,10 +56,25 @@ function App() {
   }
 
   useEffect(() => {
-    fetch('http://fakestoreapi.com/products')
+    fetch('products.json')
       .then(response => response.json())
       .then(setProducts);
   }, []);
+
+  useEffect(() => {
+    const valueCart = window.localStorage.getItem('cart');
+    if (valueCart !== null) {
+      try {
+        setCart(JSON.parse(valueCart));
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
 
   return (
     <>
