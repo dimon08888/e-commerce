@@ -5,6 +5,18 @@ import ProductDetail from './ProductDetail';
 import Cart from './Cart';
 import type { Product } from './types';
 
+function findLastIndex<T>(
+  arr: readonly T[],
+  pred: (el: T) => boolean,
+): number | undefined {
+  for (let i = arr.length - 1; i >= 0; i--) {
+    if (pred(arr[i])) {
+      return i;
+    }
+  }
+  return undefined;
+}
+
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [cart, setCart] = useState<Product[]>([]);
@@ -27,7 +39,7 @@ function App() {
 
   function onRemoveFromCart(product: Product) {
     setCart(cart => {
-      const productFirstIndex = cart.findIndex(prod => prod === product);
+      const productFirstIndex = findLastIndex(cart, prod => prod === product);
       return cart.filter((_, index) => index !== productFirstIndex);
     });
   }
